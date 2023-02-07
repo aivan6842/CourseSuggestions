@@ -1,8 +1,5 @@
 import scrapy
 
-from scraping.scraping.items import Course
-
-
 class WaterloocompsciSpider(scrapy.Spider):
     name = "waterlooCompSci"
     allowed_domains = ["ucalendar.uwaterloo.ca"]
