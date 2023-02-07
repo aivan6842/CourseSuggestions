@@ -1,9 +1,12 @@
 import scrapy
 
-class WaterloocompsciSpider(scrapy.Spider):
-    name = "waterlooCompSci"
+class WaterlooSpider(scrapy.Spider):
+    name = "waterlooSpider"
     allowed_domains = ["ucalendar.uwaterloo.ca"]
-    start_urls = ["https://ucalendar.uwaterloo.ca/2223/COURSE/course-CS.html"]
+    start_urls = [
+        "https://ucalendar.uwaterloo.ca/2223/COURSE/course-CS.html",
+        "https://ucalendar.uwaterloo.ca/2223/COURSE/course-MATH.html"
+        ]
 
     def parse(self, response):
         courseCodesRaw = response.xpath("//div[@class='divTableCell']/strong/text()").getall()
