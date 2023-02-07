@@ -23,6 +23,7 @@ Suggest Courses from University Based on Interests / Bio
  5. DPR + BM25 (retrieval) + CE (reranking)
 
 
+#Scraping
  To run scraper for a website:
   1. Make sure you are in the 'spiders' directory
   2. execute: ``` scrapy runspider $SPIDER_NAME -O $OUTPUT_FILE ```
