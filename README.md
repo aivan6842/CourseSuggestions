@@ -29,5 +29,5 @@ Suggest Courses from University Based on Interests / Bio
 
   example:``` scrapy runspider waterlooCompSci.py -O test.json ```
   
-  Note: can pass use paths for the file names
+  Note: can use paths for the file names
  
