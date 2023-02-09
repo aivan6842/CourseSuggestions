@@ -1,9 +1,10 @@
 import scrapy
+from scraping.enums.subjects import Subject
 
-class WaterloocompsciSpider(scrapy.Spider):
-    name = "waterlooCompSci"
+class WaterlooSpider(scrapy.Spider):
+    name = "waterlooSpider"
     allowed_domains = ["ucalendar.uwaterloo.ca"]
-    start_urls = ["https://ucalendar.uwaterloo.ca/2223/COURSE/course-CS.html"]
+    start_urls = ["https://ucalendar.uwaterloo.ca/2223/COURSE/course-" + course.name + ".html" for course in Subject]
 
     def parse(self, response):
         courseCodesRaw = response.xpath("//div[@class='divTableCell']/strong/text()").getall()
