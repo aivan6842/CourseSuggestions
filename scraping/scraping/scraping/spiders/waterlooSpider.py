@@ -1,7 +1,7 @@
 import scrapy
 from scraping.enums.subjects import Subject
 
-class WaterlooSpider(scrapy.Spider):    
+class WaterlooSpider(scrapy.Spider):
     name = "waterlooSpider"
     allowed_domains = ["ucalendar.uwaterloo.ca"]
     start_urls = ["https://ucalendar.uwaterloo.ca/2223/COURSE/course-" + course.name + ".html" for course in Subject]
