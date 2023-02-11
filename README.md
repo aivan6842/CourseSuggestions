@@ -31,3 +31,8 @@ Suggest Courses from University Based on Interests / Bio
   
   Note: can pass use paths for the file names
  
+# To do
+  1. Use a single encoder for query and context (fine tune as well)
+  2. Fine tune DPR
+  3. Remove excess info from course descrptions
+  4. Investigate low scores 

@@ -35,7 +35,6 @@ class ESMappings(dict, Enum):
 
     @classmethod
     def get_mapping_from_index_name(cls, index_name: str):
-        print(index_name)
         name_to_mapping = {
             IndexName.UWATERLOO_COURSES_INDEX: cls.UWATERLOO_BM25_INDEX_MAPPING,
             IndexName.UWATERLOO_COURSES_INDEX_DPR: cls.UWATERLOO_DPR_INDEX_MAPPING
