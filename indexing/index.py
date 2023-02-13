@@ -1,15 +1,20 @@
 from argparse import ArgumentParser
 import json
+from typing import Optional
 
 from indexing.enums.index_names import IndexName
 from indexing.indexers.index_to_indexer_mapping import INDEX_TO_INDEXER_MAPPING
 
 
 
-def index(index_name: str, data: list):
+def index(index_name: str, data: list, model_name: Optional[str]):
     indexer_class = INDEX_TO_INDEXER_MAPPING.get(index_name)
 
-    indexer = indexer_class(index_name=index_name, data=data)
+    if model_name:
+        indexer = indexer_class(index_name=index_name, data=data, tokenizer=model_name, encoder=model_name)
+    else:
+        indexer = indexer_class(index_name=index_name, data=data)
+    
     print(f"Starting Indexing into {index_name}")
     indexer.index()
     print("Completed Indexing")
@@ -26,6 +31,10 @@ if __name__ == "__main__":
                         type=str,
                         help="Path to JSON file containing data",
                         required=True)
+    parser.add_argument("-m", "--model_name",
+                        type=str,
+                        help="hugging face model name",
+                        required=False)
 
     args = parser.parse_args()
 
@@ -41,4 +50,4 @@ if __name__ == "__main__":
         print("No data")
         exit()
 
-    index(index_name=index_name, data=data)
+    index(index_name=index_name, data=data, model_name=args.model_name if args.model_name else None) 
