@@ -31,8 +31,16 @@ Suggest Courses from University Based on Interests / Bio
   
   Note: can pass use paths for the file names
  
+# Indexing
+Commands to run indexing
+BM25
+`python .\indexing\index.py -i uwaterloo-courses -d .\scraping\contents\waterloo\output.json`
+DPR
+`python .\indexing\index.py -i uwaterloo-courses-dpr -d .\scraping\contents\waterloo\output.json -m facebook\dpr-ctx_encoder-single-nq-base`
+T5
+`python .\indexing\index.py -i uwaterloo-courses-t5 -d .\scraping\contents\waterloo\output.json -m sentence-transformers/sentence-t5-base`
+
 # To do
-  1. Use a single encoder for query and context (fine tune as well)
-  2. Fine tune DPR
-  3. Remove excess info from course descrptions
-  4. Investigate low scores 
+  1. Fine tune DPR
+  2. Remove excess info from course descrptions
+  3. Investigate low scores 

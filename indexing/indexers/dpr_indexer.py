@@ -2,13 +2,11 @@ from indexing.indexers.indexer import Indexer
 from transformers import DPRContextEncoder, DPRContextEncoderTokenizer
 
 class DPRIndexer(Indexer):
-    def __init__(self, index_name: str, data: list, tokenizer: str, encoder: str):
+    def __init__(self, index_name: str, data: list, model_name: str):
         super().__init__(index_name, data)
-        self.tokenizer_name = tokenizer
-        self.tokenizer = DPRContextEncoderTokenizer.from_pretrained(self.tokenizer_name)
-        self.encoder_name = encoder
-        self.encoder = DPRContextEncoder.from_pretrained(self.encoder_name)
-
+        self.model_name = model_name
+        self.tokenizer = DPRContextEncoderTokenizer.from_pretrained(self.model_name)
+        self.encoder = DPRContextEncoder.from_pretrained(self.model_name)
 
     def gen_data(self):
         for item in self.data:
