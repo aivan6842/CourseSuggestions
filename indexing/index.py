@@ -1,18 +1,26 @@
 from argparse import ArgumentParser
 import json
-from typing import Any
 
 from indexing.enums.index_names import IndexName
-from indexing.indexers.index_to_indexer_mapping import INDEX_TO_INDEXER_MAPPING
 from shared.es.es_client import ES_CLIENT as es
 from indexing.mappings.mappings import ESMappings
 
+from indexing.indexers.bm25_indexer import BM25Indexer
+from indexing.indexers.dpr_indexer import DPRIndexer
+from indexing.indexers.t5_indexer import T5Indexer
 
 
-def index(index_name: str, data: list, indexer_args: dict[str, Any]):
+def index(index_name: str, data: list):
+
+    INDEX_TO_INDEXER_MAPPING = {
+        IndexName.UWATERLOO_COURSES_INDEX : BM25Indexer,
+        IndexName.UWATERLOO_COURSES_INDEX_DPR: DPRIndexer,
+        IndexName.UWATERLOO_COURSES_INDEX_T5: T5Indexer
+    }
+
     indexer_class = INDEX_TO_INDEXER_MAPPING.get(index_name)
 
-    indexer = indexer_class(index_name=index_name, data=data, **indexer_args)
+    indexer = indexer_class(index_name=index_name, data=data)
     
     # check if index already exists. If not then create one with the correct mapping
     # If the index exists we assume it has the correct mapping already
@@ -37,10 +45,6 @@ if __name__ == "__main__":
                         type=str,
                         help="Path to JSON file containing data",
                         required=True)
-    parser.add_argument("-m", "--model_name",
-                        type=str,
-                        help="hugging face model name",
-                        required=False)
 
     args = parser.parse_args()
 
@@ -56,8 +60,4 @@ if __name__ == "__main__":
         print("No data")
         exit()
 
-    dict_args = vars(args)
-    del dict_args["index_name"]
-    del dict_args["data_path"]
-
-    index(index_name=index_name, data=data, indexer_args=dict_args) 
+    index(index_name=index_name, data=data) 
