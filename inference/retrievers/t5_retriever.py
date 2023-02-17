@@ -16,6 +16,6 @@ class T5Retriever(Retriever):
             "from": 0, 
             "size": num_results, 
             "_source": ["courseName", "courseDescription", "courseCode"], 
-            "knn": {"field": "courseDescEncoding", "query_vector": embedding, "k": num_results}}
+            "knn": {"field": "courseDescEncoding", "query_vector": embedding, "k": num_results, "num_candidates": 5000}}
 
         return es_query

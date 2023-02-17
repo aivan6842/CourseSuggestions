@@ -22,12 +22,13 @@ def index(index_name: str, data: list):
 
     indexer = indexer_class(index_name=index_name, data=data)
     
-    # check if index already exists. If not then create one with the correct mapping
-    # If the index exists we assume it has the correct mapping already
-    if not es.indices.exists(index=index_name):
-        mapping = ESMappings.get_mapping_from_index_name(index_name.value)
-        assert mapping is not None
-        es.indices.create(index=index_name, body=mapping)
+    # delete index if already exists to prevent double indexing
+    if es.indices.exists(index=index_name):
+        es.indices.delete(index=index_name)
+    
+    mapping = ESMappings.get_mapping_from_index_name(index_name.value)
+    assert mapping is not None
+    es.indices.create(index=index_name, body=mapping)
 
     print(f"Starting Indexing into {index_name}")
     indexer.index()

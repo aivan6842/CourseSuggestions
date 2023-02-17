@@ -11,4 +11,4 @@ class Retriever(ABC):
 
     def retrieve(self, query: str, num_results: int = 5) -> list[dict[str, str]]:
         body = self.get_es_query(query=query, num_results=num_results)
-        es.search(index=self.index_name, body=body)
+        return es.search(index=self.index_name, body=body)
