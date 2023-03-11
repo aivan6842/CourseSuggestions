@@ -1,3 +1,4 @@
 elasticsearch
 transformers
 sentence-transformers
+numpy

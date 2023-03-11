@@ -2,5 +2,5 @@ from abc import ABC, abstractmethod
 
 class Metric:
     @abstractmethod
-    def evaluate(self, y: list[list], yhat: list[list]):
+    def evaluate(self, y: list, yhat: list):
         raise NotImplementedError

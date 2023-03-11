@@ -2,15 +2,16 @@ from argparse import ArgumentParser
 
 from inference.infer import inference
 from evaluation.metrics.mean_reciprocal_rank import MeanReciprocalRank
+from evaluation.metrics.mapk import Mapk
 
 def evaluate(file: str, retriever_names: list, metric_name: str, rerank: bool = False):
-    print(rerank)
+    METRIC_MAPPING = {
+        "mrr": MeanReciprocalRank,
+        "mapk": Mapk
+    }
+    
     f = open(file, "r")
     row = f.readlines()
-
-    METRIC_MAPPING = {
-        "mrr": MeanReciprocalRank
-    }
 
     res = [] #query, y, yhat
     for line in row[1:]:
@@ -25,13 +26,9 @@ def evaluate(file: str, retriever_names: list, metric_name: str, rerank: bool = 
         yhat_course_codes = [x[0] for x in yhat]
         res.append((query, y, yhat_course_codes))
 
-    res = res[1:]
-
+   # print([x[1] for x in res])
     metric = METRIC_MAPPING[metric_name]()
-    #print([x[2] for x in res])
     return metric.evaluate(y=[x[1] for x in res], yhat=[x[2] for x in res])
-
-
 
 if __name__ == "__main__":
     parser = ArgumentParser()
