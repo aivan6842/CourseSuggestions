@@ -1,6 +1,4 @@
 from evaluation.metrics.metric import Metric
-import numpy as np
-from itertools import product
 
 class Mapk(Metric):
     def evaluate(self, y: list, yhat: list):
@@ -10,7 +8,6 @@ class Mapk(Metric):
     def apk(self, y: list, yhat: list, k: int=0):
         #Dont need to check if lists are the same since reranker will take care if multimodel, single model wont make dups
         #Make sure k isnt greater than 5 as we only have top 5 results
-        print(f"actual: {y}, predicted: {yhat}")
         if k != 0:
             y, yhat = y[:k], yhat[:k]
 
@@ -18,9 +15,8 @@ class Mapk(Metric):
         running_sum = 0
 
         for i, yhat_item in enumerate(yhat):
-            
             k = i+1
-            #print(f"i: {i}, yhat_item: {yhat_item}")
+
             if yhat_item in y:
                 correct_predictions += 1
                 running_sum += correct_predictions/k

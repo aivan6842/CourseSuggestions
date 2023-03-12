@@ -9,7 +9,7 @@ class MeanReciprocalRank(Metric):
             
             index = -1
             try:
-                index = yhat[i].index(top)
+                index = yhat[i].index(top) + 1
             except ValueError:
                 index = -1   
 
