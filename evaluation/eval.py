@@ -3,13 +3,11 @@ from argparse import ArgumentParser
 from inference.infer import inference
 from evaluation.metrics.mean_reciprocal_rank import MeanReciprocalRank
 from evaluation.metrics.mapk import Mapk
-from evaluation.metrics.recall import Recall
 
 def evaluate(file: str, retriever_names: list, metric_name: str, rerank: bool = False):
     METRIC_MAPPING = {
         "mrr": MeanReciprocalRank,
         "mapk": Mapk,
-        "recall": Recall,
     }
     
     f = open(file, "r")
@@ -28,7 +26,6 @@ def evaluate(file: str, retriever_names: list, metric_name: str, rerank: bool = 
         yhat_course_codes = [x[0] for x in yhat]
         res.append((query, y, yhat_course_codes))
 
-   # print([x[1] for x in res])
     metric = METRIC_MAPPING[metric_name]()
     return metric.evaluate(y=[x[1] for x in res], yhat=[x[2] for x in res])
 
