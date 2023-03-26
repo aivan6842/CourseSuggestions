@@ -34,8 +34,9 @@ def inference(query: str, retriever_names: list, k: int = 5, rerank: bool = Fals
         rerank = True
     
     # unique results only
-    reranked_res = list(set(unranked_res))
+    reranked_res = unranked_res
     if rerank:
+        reranked_res = list(set(unranked_res))
         reranker = MiniLMV2Reranker()
         reranked_res = reranker.rerank(data=reranked_res, query=query)
     
